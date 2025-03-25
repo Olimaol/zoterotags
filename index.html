@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Research Article Tags</title>
+  <style>
+    /* Reset some default styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+      color: #333;
+    }
+
+    #selectedTags {
+      margin-bottom: 2rem;
+    }
+
+    #selectedTags h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #555;
+    }
+
+    #selectedTagsList {
+      min-height: 1.5rem; /* so it doesn't collapse when empty */
+      background-color: #eef;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccd;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: space-between;
+    }
+
+    .tagSection {
+      flex: 1 1 250px;
+      min-width: 220px;
+      background: #fafafa;
+      padding: 1rem;
+      border-radius: 6px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    }
+
+    .tagSection h3 {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: #444;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 0.5rem;
+    }
+
+    .tagSection label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .tagSection label:hover {
+      background-color: #e9f2ff;
+    }
+
+    .tagSection input[type="checkbox"] {
+      margin-right: 0.5rem;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 600px) {
+      form {
+        flex-direction: column;
+      }
+      .tagSection {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Select Tags for Your Research Article</h1>
+
+    <!-- Display selected tags -->
+    <div id="selectedTags">
+      <h2>Selected Tags (alphabetical):</h2>
+      <p id="selectedTagsList"></p>
+    </div>
+
+    <!-- Tag selection form (will be populated by JS) -->
+    <form id="tagForm"></form>
+  </div>
+
+  <script>
+    // Define the data for the tag sections in JS (easily editable)
+    const tagData = [
+      {
+        heading: "General type",
+        items: ["theoretical", "experimental", "modelling", "review"]
+      },
+      {
+        heading: "About who",
+        items: ["human", "animal", "rodent", "monkey"]
+      },
+      {
+        heading: "Related to topics",
+        items: [
+          "PD",
+          "DBS",
+          "firing-pattern",
+          "oscillatory-activity",
+          "dopamine-effects",
+          "attention",
+          "depression",
+          "exploration",
+          "FC",
+          "lesion",
+          "medication",
+          "reversal learning",
+          "RL",
+          "selection",
+          "stopping",
+          "synaptic plasticity",
+          "habit",
+          "connectivity"
+        ]
+      },
+      {
+        heading: "Brain Scope",
+        items: [
+          "whole-brain",
+          "BG",
+          "VTA",
+          "cortex",
+          "dopamine cells",
+          "GP",
+          "hippocampus",
+          "PFC",
+          "PPN",
+          "SNr",
+          "STN",
+          "striatum",
+          "thalamus",
+          "V4"
+        ]
+      },
+      {
+        heading: "Type of data",
+        items: [
+          "behavioral",
+          "electrophyiological",
+          "molecular",
+          "MRI",
+          "EEG",
+          "LFP",
+          "cell recordings",
+          "PET"
+        ]
+      },
+      {
+        heading: "Modelling specifics",
+        items: [
+          "rate-coded",
+          "spiking",
+          "model-fitting",
+          "BOLD-simulation",
+          "replicate-data"
+        ]
+      },
+      {
+        heading: "Read info",
+        items: [
+          "not read",
+          "only interesting",
+          "partially read",
+          "read"
+        ]
+      }
+    ];
+
+    // Generate the form based on the tagData
+    const form = document.getElementById("tagForm");
+    const selectedTagsList = document.getElementById("selectedTagsList");
+
+    // Function to create a section of checkboxes
+    function createTagSection(sectionData) {
+      // Create a container div
+      const sectionDiv = document.createElement("div");
+      sectionDiv.classList.add("tagSection");
+
+      // Create a heading
+      const heading = document.createElement("h3");
+      heading.textContent = sectionData.heading;
+      sectionDiv.appendChild(heading);
+
+      // Create checkboxes for each item
+      sectionData.items.forEach((item) => {
+        const label = document.createElement("label");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = item;
+        checkbox.addEventListener("change", updateSelectedTags);
+
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(item));
+
+        sectionDiv.appendChild(label);
+      });
+
+      return sectionDiv;
+    }
+
+    // Loop through the tagData to build the form
+    tagData.forEach((section) => {
+      const sectionElement = createTagSection(section);
+      form.appendChild(sectionElement);
+    });
+
+    // Function to update the list of selected tags
+    function updateSelectedTags() {
+      // Get all checked checkboxes
+      const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+      const values = [];
+
+      // Collect their values
+      checkedBoxes.forEach((box) => {
+        values.push(box.value);
+      });
+
+      // Sort alphabetically
+      values.sort((a, b) => a.localeCompare(b));
+
+      // Display in the paragraph
+      selectedTagsList.textContent = values.join(", ");
+    }
+  </script>
+</body>
+</html>
