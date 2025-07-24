@@ -46,11 +46,25 @@
     }
 
     #selectedTagsList {
-      min-height: 1.5rem; /* so it doesn't collapse when empty */
-      background-color: #eef;
-      padding: 0.5rem;
-      border-radius: 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tagItem {
+      display: flex;
+      align-items: center;
+      background: #eef;
+      padding: 0.3rem 0.6rem;
       border: 1px solid #ccd;
+      border-radius: 4px;
+    }
+
+    .copy-btn {
+      margin-left: 0.5rem;
+      padding: 0.2rem 0.4rem;
+      font-size: 0.85rem;
+      cursor: pointer;
     }
 
     form {
@@ -113,7 +127,7 @@
     <!-- Display selected tags -->
     <div id="selectedTags">
       <h2>Selected Tags (alphabetical):</h2>
-      <p id="selectedTagsList"></p>
+      <div id="selectedTagsList"></div>
     </div>
 
     <!-- Tag selection form (will be populated by JS) -->
@@ -266,22 +280,42 @@
       form.appendChild(sectionElement);
     });
 
-    // Function to update the list of selected tags
+    // New helper to copy a tag to clipboard
+    function copyTag(text) {
+      navigator.clipboard.writeText(text);
+    }
+
+    // Updated function to render each tag with a copy button
     function updateSelectedTags() {
-      // Get all checked checkboxes
-      const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
-      const values = [];
+      const listContainer = document.getElementById("selectedTagsList");
+      // clear old entries
+      listContainer.innerHTML = "";
+      // gather & sort values
+      const values = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                          .map(cb => cb.value)
+                          .sort((a, b) => a.localeCompare(b));
+      // for each selected tag, create an item + button
+      values.forEach(tag => {
+        const item = document.createElement("div");
+        item.className = "tagItem";
 
-      // Collect their values
-      checkedBoxes.forEach((box) => {
-        values.push(box.value);
+        const span = document.createElement("span");
+        span.textContent = tag;
+
+        const btn = document.createElement("button");
+        btn.className = "copy-btn";
+        btn.textContent = "Copy";
+        btn.addEventListener("click", () => {
+          copyTag(tag);
+          const cb = document.querySelector(`input[type="checkbox"][value="${tag}"]`);
+          if (cb) cb.checked = false;
+          updateSelectedTags();
+        });
+
+        item.appendChild(span);
+        item.appendChild(btn);
+        listContainer.appendChild(item);
       });
-
-      // Sort alphabetically
-      values.sort((a, b) => a.localeCompare(b));
-
-      // Display in the paragraph
-      selectedTagsList.textContent = values.join(", ");
     }
   </script>
 </body>
