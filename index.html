@@ -124,86 +124,105 @@
     // Define the data for the tag sections in JS (easily editable)
     const tagData = [
       {
-        heading: "General type",
-        items: ["theoretical", "experimental", "modelling", "review"]
+        heading: "type: - General paper type",
+        items: ["type:theoretical", "type:experimental", "type:modelling", "type:review", "type:methods"]
       },
       {
-        heading: "About who",
-        items: ["human", "animal", "rodent", "monkey"]
+        heading: "species: - Organism studied",
+        items: ["species:human", "species:animal", "species:rodent", "species:monkey"]
       },
       {
-        heading: "Related to topics",
+        heading: "region: Brain Scope",
         items: [
-          "PD",
-          "DBS",
-          "firing-pattern",
-          "oscillatory-activity",
-          "dopamine-effects",
-          "attention",
-          "depression",
-          "exploration",
-          "FC",
-          "lesion",
-          "medication",
-          "reversal learning",
-          "RL",
-          "selection",
-          "stopping",
-          "synaptic plasticity",
-          "habit",
-          "connectivity",
-          "working memory"
+          "region:whole-brain",
+          "region:basal-ganglia (BG)",
+          "region:ventral-tegmental-area (VTA)",
+          "region:cortex",
+          "region:dopamine-cells",
+          "region:globus-pallidus (GP)",
+          "region:hippocampus",
+          "region:prefrontal-cortex (PFC)",
+          "region:pedunculopontine-nucleus (PPN)",
+          "region:substantia-nigra-reticulata (SNr)",
+          "region:subthalamic-nucleus (STN)",
+          "region:striatum",
+          "region:thalamus",
+          "region:V4"
         ]
       },
       {
-        heading: "Brain Scope",
+        heading: "topic: Topics covered",
         items: [
-          "whole-brain",
-          "BG",
-          "VTA",
-          "cortex",
-          "dopamine cells",
-          "GP",
-          "hippocampus",
-          "PFC",
-          "PPN",
-          "SNr",
-          "STN",
-          "striatum",
-          "thalamus",
-          "V4"
+          "topic:firing-pattern",
+          "topic:oscillatory-activity",
+          "topic:dopamine-effects",
+          "topic:attention",
+          "topic:exploration",
+          "topic:functional-connectivity",
+          "topic:reversal-learning",
+          "topic:reinforcement-learning",
+          "topic:selection",
+          "topic:stopping",
+          "topic:synaptic-plasticity",
+          "topic:habit",
+          "topic:connectivity",
+          "topic:working memory"
         ]
       },
       {
-        heading: "Type of data",
+        heading: "method: Experimental or analytical method",
         items: [
-          "behavioral",
-          "electrophyiological",
-          "molecular",
-          "MRI",
-          "EEG",
-          "LFP",
-          "cell recordings",
-          "PET"
+          "method:behavioral",
+          "method:electrophyiological",
+          "method:molecular",
+          "method:mri",
+          "method:eeg",
+          "method:lfp",
+          "method:cell-recordings",
+          "method:pet"
         ]
       },
       {
-        heading: "Modelling specifics",
+        heading: "condition: Clinical or behavioral condition",
         items: [
-          "rate-coded",
-          "spiking",
-          "model-fitting",
-          "BOLD-simulation",
-          "replicate-data"
+          "condition:parkinsons",
+	        "condition:ocd",
+	        "condition:depression",
+	        "condition:adhd",
+	        "condition:healthy",
+	        "condition:addiction",
+	        "condition:schizophrenia",
+	        "condition:tourette"
         ]
       },
       {
-        heading: "Read info",
+        heading: "technique: Brain-related intervention, technology, or manipulation",
         items: [
-          "not read",
-          "only interesting",
-          "partially read",
-          "read"
+          "technique:dbs",
+	        "technique:optogenetics",
+	        "technique:pharmacology",
+	        "technique:lesion",
+	        "technique:stimulation"
+        ]
+      },
+      {
+        heading: "model: Modelling specifics",
+        items: [
+          "model:rate-coded",
+          "model:spiking",
+          "model:model-fitting",
+          "model:bold-simulation",
+          "model:replicate-data"
+        ]
+      },
+      {
+        heading: "status: Reading progress",
+        items: [
+          "status:not-read",
+          "status:only-interesting",
+          "status:partially-read",
+          "status:read",
+          "status:summary-written"
         ]
       }
     ];
